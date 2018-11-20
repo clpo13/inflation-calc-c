@@ -8,18 +8,6 @@
 
 #define BSIZE 80  // buffer size constant
 
-// parse lines from a CSV file
-// from <https://stackoverflow.com/questions/12911299/read-csv-file-in-c/12911465#12911465>
-const char *getField(char *line, int num) {
-    char *token;
-    for (token = strtok(line, ","); token && *token; token = strtok(NULL, ",\n")) {
-        if (!--num) {
-            return token;
-        }
-    }
-    return NULL;
-}
-
 int main(int argc, char **argv) {
     char filename[] = "cpi.csv";  // file to parse
     char line[BSIZE];             // char array to hold each line
@@ -35,9 +23,16 @@ int main(int argc, char **argv) {
 
     // read filestream line-by-line
     while (fgets(line, 1024, stream)) {
-        char *ptr;  // pointer to hold unconverted portion of the line
-        year = strtol(getField(strdup(line), 1), &ptr, 10);
-        cpi = strtod(getField(strdup(line), 2), &ptr);
+        char *field;  // holds individual CSV fields
+        char *ptr;    // holds unconverted portion of the line (if any)
+
+        // first field is the year (delimited by a comma)
+        field = strtok(line, ",");
+        year = strtol(field, &ptr, 10);
+
+        // second field is the CPI value (delimited by a comma or newline)
+        field = strtok(NULL, ",\n");
+        cpi = strtod(field, &ptr);
 
         // Discard first line (header)
         // This works because the header line is [Year, CPI], so the conversions
@@ -48,9 +43,10 @@ int main(int argc, char **argv) {
             continue;
         }
 
+        // print year and CPI (truncated to three decimal places)
         printf("CPI for %ld is %.3f\n", year, cpi);
     }
 
-    // close the file
+    // close the filestream
     fclose(stream);
 }

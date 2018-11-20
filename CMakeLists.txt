@@ -5,6 +5,7 @@ set(CMAKE_C_STANDARD 99)
 
 add_executable(inflation_calc main.c)
 
+# Copy cpi.csv to build directory to avoid errors
 add_custom_command(
         TARGET inflation_calc POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy

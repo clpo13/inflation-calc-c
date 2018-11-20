@@ -30,6 +30,10 @@ Make sure `cpi.csv` is in the same directory, or you'll get an error. CMake will
 automatically copy the file to the build directory, but if you move the built
 binary, the CSV needs to go with it.
 
+Also, the program expects the CSV to have only two fields, year and CPI,
+separated by commas. Additional fields will be ignored. A header line (like the
+one in the included CSV file) is optional. If present, it will be ignored.
+
 ## Purpose
 
 For now, the program just reads the CSV and spits formatted data out, but the
@@ -40,7 +44,7 @@ if specified with a command-line flag.
 
 ## TODO
 
-* [ ] Accept user input to compare different years
+* [ ] Accept user input to compare different years and amounts
 * [ ] Include CPI data in a more portable way (instead of copying the CSV)
 * [ ] Pull data directly from [BLS](https://www.bls.gov/cpi/) via their API
 
