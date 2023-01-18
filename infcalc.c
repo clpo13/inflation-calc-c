@@ -1,5 +1,5 @@
-// Simple command-line program to print the rate of inflation
-// Copyright (c) 2018 Cody Logan, released under the MIT license
+// Simple command-line program to print the rate of inflation.
+// Copyright (c) 2018, 2023 Cody Logan, released under the terms of the MIT license.
 // SPDX-License-Identifier: MIT
 
 #include <stdio.h>
@@ -8,7 +8,7 @@
 
 #define BSIZE 80  // buffer size constant
 
-int main(int argc, char **argv) {
+int main(int argc, char *argv[]) {
     char filename[] = "cpi.csv";  // file to parse
     char line[BSIZE];             // char array to hold each line
     long year;                    // long integer representation of year
@@ -22,7 +22,8 @@ int main(int argc, char **argv) {
     }
 
     // read filestream line-by-line
-    while (fgets(line, 1024, stream)) {
+    while (fgets(line, BSIZE, stream)) {
+        // TODO: might be a good idea to make a struct for this data.
         char *field;  // holds individual CSV fields
         char *ptr;    // holds unconverted portion of the line (if any)
 

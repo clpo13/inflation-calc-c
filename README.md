@@ -17,12 +17,11 @@ The included [cpi.csv](cpi.csv) file contains annual Consumer Price Indices from
 In the top source directory, run:
 
 ```bash
-mkdir build && cd build
-cmake ..
-make
+cmake -B build
+cmake --build build
 ```
 
-Then run `./inflation-calc`.
+Then run `./build/infcalc`.
 
 ## Caveats
 
@@ -38,7 +37,7 @@ one in the included CSV file) is optional. If present, it will be ignored.
 
 For now, the program just reads the CSV and spits formatted data out, but the
 idea is to be able to compare the purchasing power of a given amount of USD for
-two different years. For example, `inflation-calc --amount 1.00 1913 2016` should
+two different years. For example, `infcalc --amount 1.00 1913 2016` should
 return `$24.24`. Optionally, the cumulative rate of inflation would be returned
 if specified with a command-line flag.
 
